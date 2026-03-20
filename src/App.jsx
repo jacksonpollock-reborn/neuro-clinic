@@ -780,6 +780,7 @@ export default function CyberApp() {
 
   const handleStartSession = (personaId) => {
     setSelectedPersona(PERSONAS[personaId]);
+    setMessages([]);
     setCurrentView('payment');
     setPromoError('');
     setPromoCode('');
@@ -820,7 +821,6 @@ export default function CyberApp() {
     setIsSessionActive(true);
     setIsDreamMode(false);
     setInputText('');
-    setMessages([]);
 
     if (user) {
       const chatRef = doc(db, 'artifacts', appId, 'users', user.uid, 'chats', selectedPersona.id);
@@ -1028,12 +1028,10 @@ export default function CyberApp() {
         setMessages(prev => [...prev, { role: 'system', content: '[SYS_ERR: INSUFFICIENT CYCLES FOR MANUAL RENDER (REQUIRES 25)]' }]);
         setIsDreamMode(false);
         setInputText('');
-    setMessages([]);
         return;
       }
       setMessages(prev => [...prev, { role: 'user', type: 'text', content: `[EXECUTE MANUAL RENDER: ${userMsg}]` }]);
       setInputText('');
-    setMessages([]);
       setIsDreamMode(false);
       setCreditsLeft(prev => prev - 25);
       if (user) {
@@ -1046,7 +1044,6 @@ export default function CyberApp() {
 
     setMessages(prev => [...prev, { role: 'user', type: 'text', content: userMsg }]);
     setInputText('');
-    setMessages([]);
     
     setCreditsLeft(prev => prev - 1);
     if (user) {
